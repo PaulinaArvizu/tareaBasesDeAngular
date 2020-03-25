@@ -1,0 +1,32 @@
+<style>
+  p {
+    margin-bottom: 0;
+  }
+
+</style>
+<input type="text" (input)="inputValue = $event.target.value" (keydown.enter)="buscar()">
+<button type="button" class="btn btn-primary" (click)="buscar()">Buscar</button>
+<p *ngIf="inputValue.length > 0"><small>Buscando: {{inputValue}}</small></p>
+
+<p><input type="checkbox" (input)="conExistencia()"> Solo en existencia</p>
+<p><input type="checkbox" (input)="ordenarPrecio()"> Ordenar por precio (menor a mayor)</p>
+<p><input type="checkbox" (input)="resaltarProductos()"> Resaltar existencia mayor a 3</p>
+
+<table class="table">
+  <tr *ngFor="let prod of resultado; let i = index;" [class.bg-danger]="resaltar && prod.existencia > 3">
+    <td width="10%">
+      <img src="https://picsum.photos/id/{{prod.uid}}/100/100">
+    </td>
+    <td>
+      <p><strong>{{prod.nombre}}</strong></p>
+      <p>Precio: ${{prod.precio}}</p>
+      <p>Marca: {{prod.marca}}</p>
+      <p>Descripcion: {{prod.descripcion}}</p>
+      <p>Existencia: {{prod.existencia}}</p>
+    </td>
+  </tr>
+</table>
+
+<div *ngIf="resultado.length == 0" class="alert alert-danger" role="alert">
+  <strong>Ningún producto concuerda con la búsqueda</strong>
+</div>
